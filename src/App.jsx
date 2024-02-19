@@ -1,35 +1,78 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [personCredentials, setPersonCredentials] = useState({
+    firstName: "",
+    lastName: "",
+    age: "",
+  });
+
+  //destructure the state
+  const { firstName, lastName, age } = personCredentials;
+
+  // handleCredentials
+  const handleCredentials = (e) => {
+    const { name, value } = e.target;
+    setPersonCredentials((creds) => ({ ...creds, [name]: value }));
+  };
+
+  //para submit na function
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // mag submit
+
+    // clear
+    clearForm();
+  };
+  const clearForm = () => {
+    // para clear
+    setPersonCredentials(() => ({
+      ...{
+        firstName: "",
+        lastName: "",
+        age: "",
+      },
+    }));
+  };
+
+  console.log(personCredentials);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container di-flex align-items-center justify-content-center">
+        <form className="w-50 mt-5" onSubmit={onSubmit}>
+          <input
+            className="form-control my-2"
+            type="text"
+            placeholder="First name"
+            name="firstName"
+            id="firstName"
+            value={firstName}
+            onChange={handleCredentials}
+          />
+          <input
+            className="form-control my-2"
+            type="text"
+            placeholder="Last name"
+            name="lastName"
+            id="lastName"
+            value={lastName}
+            onChange={handleCredentials}
+          />
+          <input
+            className="form-control my-2"
+            type="number"
+            placeholder="age"
+            name="age"
+            id="age"
+            value={age}
+            onChange={handleCredentials}
+          />
+          <button className="submit">Submit</button>
+        </form>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
